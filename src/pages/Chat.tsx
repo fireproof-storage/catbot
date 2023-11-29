@@ -12,6 +12,7 @@ import catImage from '../assets/cat.png'
 import { ImageBubble, ChatBubble, UserBubble } from '../components/ChatBubbles'
 
 import { useAuth } from '@clerk/clerk-react'
+import PartySocket from 'partysocket'
 
 type MsgData = { _id: string; msg?: string; prompt?: string; done?: boolean; sent: number }
 type MsgDoc = Doc & MsgData
@@ -124,6 +125,9 @@ export function Chat() {
       setTimeout(() => {
         scrollTo()
       }, 100)
+    })
+    PartySocket.fetch({ host: PUBLIC_PARTYKIT_HOST, room: dbName as string }).then(async (res) => {
+      console.log('res', await res.json())
     })
     resetField('msg')
   }
